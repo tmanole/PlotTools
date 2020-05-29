@@ -18,8 +18,8 @@ def get(rootFile, path):
     obj = rootFile.Get(path)
     if str(obj) == "<ROOT.TObject object at 0x(nil)>": 
         rootFile.ls()
-        print 
-        print "ERROR: Object not found -", rootFile, path
+        print() 
+        print("ERROR: Object not found -", rootFile, path)
         sys.exit()
 
     else: return obj
@@ -32,8 +32,8 @@ def plot(sampleDictionary, plotParameters,debug=False):
     #     log.write(json.dumps(dictionaries))
     #     log.close()
     same=""
-    if debug: print
-    if debug: print "------------------------------------------------------------------------------"
+    if debug: print()
+    if debug: print("------------------------------------------------------------------------------")
 # sampleDictionary is a dictionary of dictionaries which contains 
 # information for each histogram going into the current plot with 
 # the following structure:
@@ -198,8 +198,8 @@ def plot(sampleDictionary, plotParameters,debug=False):
     th2Ratio = False
     for f in sampleDictionary:
         Files[f] = ROOT.TFile(f,"READ")
-        if debug: print "File:",f
-        if debug: print "     ",Files[f]
+        if debug: print("File:",f)
+        if debug: print("     ",Files[f])
 
         hists[f] = {}
         systematics[f] = {}
@@ -248,7 +248,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
             if "systematics" in sampleDictionary[f][p]:
                 if sampleDictionary[f][p]["systematics"]: 
                     drawSystematics=True
-                    print "Getting Systematic Variations:",sampleDictionary[f][p]["systematics"]
+                    print("Getting Systematic Variations:",sampleDictionary[f][p]["systematics"])
                     systematics[f][p] = {}
                     #systematics[f][p] = ROOT.TGraphAsymmErrors(hists[f][p])
                     for syst in sampleDictionary[f][p]["systematics"]: 
@@ -295,8 +295,8 @@ def plot(sampleDictionary, plotParameters,debug=False):
                 integral = hists[f][p].Integral()
                 nEntries = hists[f][p].GetEntries()
                 setStyle(hists[f][p],ratio,plotParameters)
-                if debug: print "Hist:",h.ljust(40),str(hists[f][p]).rjust(30)
-                if debug: print "     nEntries =",nEntries
+                if debug: print("Hist:",h.ljust(40),str(hists[f][p]).rjust(30))
+                if debug: print("     nEntries =",nEntries)
             #if "TGraph" in str(hists[f][p]):
             #    setStyle(hists[f][p],ratio,plotParameters)
 
@@ -318,7 +318,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
             xMax = plotParameters["xMax"] if "xMax" in plotParameters else hists[f][p].GetXaxis().GetXmax()
             xMin = plotParameters["xMin"] if "xMin" in plotParameters else hists[f][p].GetXaxis().GetXmin()
             if "TH" in str(hists[f][p]):
-                if debug: print "Setting Range On ",f,p,"xMin:",xMin,"xMax",xMax
+                if debug: print("Setting Range On ",f,p,"xMin:",xMin,"xMax",xMax)
                 hists[f][p].GetXaxis().SetRangeUser(xMin,xMax) 
 
             if "xNdivisions" in plotParameters: hists[f][p].GetXaxis().SetNdivisions(plotParameters["xNdivisions"])
@@ -333,7 +333,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
 
             if "TH" in str(hists[f][p]):
                 integral = hists[f][p].Integral()
-                if debug: print "     Integral =",integral
+                if debug: print("     Integral =",integral)
 
 
             if "TH" in str(hists[f][p]) or "TF" in str(hists[f][p]):
@@ -379,7 +379,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
             elif "TH2" in str(hists[f][p]):
                 if not th2Ratio:
                     if not ratioOnly: 
-                        if debug: print "hists["+f+"]["+p+"].Draw("+same+drawOptions+")"
+                        if debug: print("hists["+f+"]["+p+"].Draw("+same+drawOptions+")")
                         hists[f][p].Draw(same+drawOptions)
                         same="SAME "
             else:#function or other ROOT object? Try drawing it..
@@ -390,13 +390,13 @@ def plot(sampleDictionary, plotParameters,debug=False):
                     if "rPad" in sampleDictionary[f][p]["pad"]:
                         ratioTObjects.append(hists[f][p])
                     if not ratioOnly: 
-                        if debug: print "hists["+f+"]["+p+"].Draw("+drawOptions+")"
+                        if debug: print("hists["+f+"]["+p+"].Draw("+drawOptions+")")
                         otherObjects.append({'object':hists[f][p], 'drawOptions':drawOptions})
                         #hists[f][p].Draw(drawOptions)
                         #same="SAME "
                 else:
                     if not ratioOnly: 
-                        if debug: print "hists["+f+"]["+p+"].Draw("+drawOptions+")"
+                        if debug: print("hists["+f+"]["+p+"].Draw("+drawOptions+")")
                         otherObjects.append({'object':hists[f][p], 'drawOptions':drawOptions})
                         #hists[f][p].Draw(drawOptions)
                         #same="SAME "
@@ -407,7 +407,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
         hists[f_data][p_data].GetXaxis().SetRangeUser(xMin,xMax) 
 
         if not ratioOnly: 
-            if debug: print "hists["+f_data+"]["+p_data+"].Draw("+same+h_data_draw+")"
+            if debug: print("hists["+f_data+"]["+p_data+"].Draw("+same+h_data_draw+")")
             hists[f_data][p_data].Draw(same+h_data_draw)                    
             same="SAME "
 
@@ -426,12 +426,12 @@ def plot(sampleDictionary, plotParameters,debug=False):
     if histListDim == 1:
         yMin = plotParameters["yMin"] if "yMin" in plotParameters else None
         yMax = plotParameters["yMax"] if "yMax" in plotParameters else None
-        if debug: print "yMin",yMin,"yMax",yMax
+        if debug: print("yMin",yMin,"yMax",yMax)
         SetYaxisRange(histList,yMax,yMin,logY,ratio,debug)
     else:
         zMin = plotParameters["zMin"] if "zMin" in plotParameters else None
         zMax = plotParameters["zMax"] if "zMax" in plotParameters else None
-        if debug: print "zMin",zMin,"zMax",zMax
+        if debug: print("zMin",zMin,"zMax",zMax)
         SetYaxisRange(histList,zMax,zMin,logY,ratio,debug)
 
     # stack up the hists in stack in proper order
@@ -444,12 +444,12 @@ def plot(sampleDictionary, plotParameters,debug=False):
             hPad.cd()
             if not ratioOnly: 
                 if histListDim == 2:
-                    if debug: print "stacked.GetStack().Last().Draw("+same+" "+stackDrawOptions+")"
+                    if debug: print("stacked.GetStack().Last().Draw("+same+" "+stackDrawOptions+")")
                     setStyle(stacked.GetStack().Last())
                     stacked.GetStack().Last().Draw(same+" "+stackDrawOptions)
                     same="SAME "
                 else:
-                    if debug: print "stacked.Draw("+same+" "+stackDrawOptions+")"
+                    if debug: print("stacked.Draw("+same+" "+stackDrawOptions+")")
                     stacked.Draw(same+" "+stackDrawOptions)
                     same="SAME "
             if "stackErrors" in plotParameters: 
@@ -467,7 +467,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
                 #             for word in p.split("_"): systematic = systematic.replace(word,"")
                 #             print p,systematic
                 if not ratioOnly: 
-                    if debug: print """errors.Draw("e2 SAME")"""
+                    #if debug: print() """errors.Draw("e2 SAME")"""
                     errors.Draw("e2 SAME")
 
 
@@ -481,7 +481,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
                         continue
                 drawOptions = sampleDictionary[f][p]["drawOptions"] if "drawOptions" in sampleDictionary[f][p] else "HIST "
                 if not ratioOnly: 
-                    if debug: print "hists["+f+"]["+p+"].Draw("+drawOptions+same+")"
+                    if debug: print("hists["+f+"]["+p+"].Draw("+drawOptions+same+")")
                     #if "HIST P" in drawOptions: hists[f][p].Draw("HIST"+same) ## NEED THIS FOR SINGLE BIN ACCEPTANCE PLOTS...
                     hists[f][p].Draw(drawOptions+same)
                     same=" SAME "
@@ -494,8 +494,8 @@ def plot(sampleDictionary, plotParameters,debug=False):
         hists[f_data][p_data].SetMarkerSize(0.7)
         hists[f_data][p_data].SetLineWidth(2 if "lineWidth" not in sampleDictionary[f_data][p_data] else sampleDictionary[f_data][p_data]["lineWidth"])
         if not ratioOnly:
-            if debug: print "hists["+f_data+"]["+p_data+"].Draw("+same+h_data_draw+")"
-            if debug: print "hists["+f_data+"]["+p_data+"].Draw("+"ex0 axis "+same+")"
+            if debug: print("hists["+f_data+"]["+p_data+"].Draw("+same+h_data_draw+")")
+            if debug: print("hists["+f_data+"]["+p_data+"].Draw("+"ex0 axis "+same+")")
             hists[f_data][p_data].Draw(same+h_data_draw) #HAVE TO DRAW TWICE BECAUSE FUCK ROOT
             hists[f_data][p_data].Draw("ex0 axis "+same) #HAVE TO DRAW TWICE BECAUSE FUCK ROOT
             same="SAME "
@@ -547,9 +547,9 @@ def plot(sampleDictionary, plotParameters,debug=False):
             if len(ratioDictionary["denom"][ratioSet]) > 1: denomColors = True
             if len(ratioDictionary["numer"][ratioSet]) > 1: numerColors = True
             if denomColors and numerColors: 
-                print "ERROR:"
-                print ratioDictionary["denom"][ratioSet]
-                print ratioDictionary["numer"][ratioSet]
+                print("ERROR:")
+                print(ratioDictionary["denom"][ratioSet])
+                print(ratioDictionary["numer"][ratioSet])
                 continue #don't know how to handle this yet..
             for denom in ratioDictionary["denom"][ratioSet]:
                 #denom = ratioDictionary["denom"][ratioSet]
@@ -580,7 +580,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
                                 numer.Divide(denom)
                         else:
                             numer.Divide(denom)                                
-                        if debug: print """numer.Draw("SAME COLZ")"""
+                        #if debug: print() """numer.Draw("SAME COLZ")"""
                         numer.Draw("SAME COLZ")
         
 
@@ -652,7 +652,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
         if "legendTextSize" in plotParameters:
             ROOT.gStyle.SetLegendTextSize(plotParameters["legendTextSize"])
         hPad.cd()
-        if debug: print "legend.Draw()"
+        if debug: print("legend.Draw()")
         legend.Draw()
 
     # Text
@@ -662,7 +662,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
         box.SetLineColor(ROOT.kBlack)
         box.SetFillColor(ROOT.kWhite)
         box.SetFillStyle(1001)
-        if debug: print """box.Draw("same l")"""
+        #if debug: print() """box.Draw("same l")"""
         box.Draw("same l")
 
     if "legendSubText" in plotParameters:
@@ -680,7 +680,7 @@ def plot(sampleDictionary, plotParameters,debug=False):
     xTitleLeft  = UserToNDC(hPad, "x", hPad.GetFrame().GetX1(), debug)
     xTitleRight = UserToNDC(hPad, "x", hPad.GetFrame().GetX2(), debug)
     yTitleLeft  = UserToNDC(hPad, "y", hPad.GetFrame().GetY2(), debug) + 0.007
-    if debug: print "xTitleLeft",xTitleLeft,"yTitleLeft",yTitleLeft
+    if debug: print("xTitleLeft",xTitleLeft,"yTitleLeft",yTitleLeft)
 
     if "titleLeft" in plotParameters:
         if "xTitleLeft" in plotParameters: xTitleLeft = plotParameters["xTitleLeft"]
@@ -718,14 +718,14 @@ def plot(sampleDictionary, plotParameters,debug=False):
     if "drawLines" in plotParameters:
         tline = ROOT.TLine()
         for line in plotParameters["drawLines"]:
-            if debug: print "tline.DrawLine("+str(line[0])+","+str(line[1])+","+str(line[2])+","+str(line[3])+")"
+            if debug: print("tline.DrawLine("+str(line[0])+","+str(line[1])+","+str(line[2])+","+str(line[3])+")")
             tline.DrawLine(line[0],line[1],line[2],line[3])
 
     if "ratioLines" in plotParameters:
         rPad.cd()
         tline = ROOT.TLine()
         for line in plotParameters["ratioLines"]:
-            if debug: print "tline.DrawLine("+str(line[0])+","+str(line[1])+","+str(line[2])+","+str(line[3])+")"
+            if debug: print("tline.DrawLine("+str(line[0])+","+str(line[1])+","+str(line[2])+","+str(line[3])+")")
             tline.DrawLine(line[0],line[1],line[2],line[3])
         hPad.cd()
 
@@ -745,13 +745,13 @@ def plot(sampleDictionary, plotParameters,debug=False):
                 funcs[-1].SetLineColor(eval(funcDef[6]))
                 funcs[-1].SetLineStyle(funcDef[7])
                 funcs[-1].SetLineWidth(5)
-                if debug: print """funcs[-1].Draw("cont3 SAME")"""
+                #if debug: print """funcs[-1].Draw("cont3 SAME")"""
                 funcs[-1].Draw("cont3 SAME")
             else:
                 funcs.append(ROOT.TF1("func"+str(i),funcDef[0],funcDef[1],funcDef[2]))
                 funcs[-1].SetLineColor(ROOT.kBlack)
                 funcs[-1].SetLineWidth(4)
-                if debug: print """funcs[-1].Draw("SAME")"""
+                #if debug: print """funcs[-1].Draw("SAME")"""
                 funcs[-1].Draw("SAME")
 
             i+=1
@@ -766,10 +766,10 @@ def plot(sampleDictionary, plotParameters,debug=False):
             os.makedirs(outdir)
 
     if logY:
-        if debug: print "SaveAs("+plotParameters["outputDir"]+plotParameters["outputName"]+"_logy.pdf)"
+        if debug: print("SaveAs("+plotParameters["outputDir"]+plotParameters["outputName"]+"_logy.pdf)")
         canvas.SaveAs(plotParameters["outputDir"]+plotParameters["outputName"]+"_logy.pdf")
     else:
-        if debug: print "SaveAs("+plotParameters["outputDir"]+plotParameters["outputName"]+".pdf)"
+        if debug: print("SaveAs("+plotParameters["outputDir"]+plotParameters["outputName"]+".pdf)")
         canvas.SaveAs(plotParameters["outputDir"]+plotParameters["outputName"]+".pdf")
         #canvas.SaveAs(plotParameters["outputDir"]+plotParameters["outputName"]+".root")
 
@@ -782,7 +782,7 @@ def UserToNDC(pad,axis,u,debug=False):
     if axis == "y": 
         u1, u2 = pad.GetY1(), pad.GetY2()
     ndc = (u - u1)/(u2-u1);
-    if debug: print "UserToNDC | "+axis+":",u,"| "+axis+"1:",u1,"| "+axis+"2:",u2,"| NDC:",ndc
+    if debug: print("UserToNDC | "+axis+":",u,"| "+axis+"1:",u1,"| "+axis+"2:",u2,"| NDC:",ndc)
     return ndc
     
 
@@ -1061,9 +1061,9 @@ def smartBins(hist,debug=False):
 #   Do variable rebinning for a histogram
 #
 def do_variable_rebinning(hist,bins,debug=False):
-    if debug: print "Doing var rebinnind"
+    #if debug: print("Doing var rebinnind")
     a=hist.GetXaxis()
-    if debug: print "bins are",bins
+    #if debug: print "bins are",bins
     newhist=ROOT.TH1F(hist.GetName()+"variableBins_"+str(random.random()),
                       hist.GetTitle()+";"+hist.GetXaxis().GetTitle()+";"+hist.GetYaxis().GetTitle(),
                       len(bins)-1,
@@ -1072,14 +1072,14 @@ def do_variable_rebinning(hist,bins,debug=False):
     newhist.SetBinErrorOption(histErrorOption)
     if not newhist.GetSumw2N(): newhist.Sumw2()
     newa=newhist.GetXaxis()
-    if debug: print newa.GetXmin(),"-",newa.GetXmax()
+    #if debug: print newa.GetXmin(),"-",newa.GetXmax()
     for b in range(1, hist.GetNbinsX()+1):
         newb=newa.FindBin(a.GetBinCenter(b))
         val=newhist.GetBinContent(newb)
         ratio_bin_widths=newa.GetBinWidth(newb)/a.GetBinWidth(b)
         if abs(ratio_bin_widths - int(ratio_bin_widths*1e6)/1.0e6) > 0.001: 
-            print ratio_bin_widths,"NOT INTEGER RATIO OF BIN WITDHS!!!", abs(ratio_bin_widths - int(ratio_bin_widths*1e6)/1.0e6)
-            print hist.GetName()
+            print(ratio_bin_widths,"NOT INTEGER RATIO OF BIN WITDHS!!!", abs(ratio_bin_widths - int(ratio_bin_widths*1e6)/1.0e6))
+            print(hist.GetName())
             raw_input()
         val=val+hist.GetBinContent(b)/ratio_bin_widths
         newhist.SetBinContent(newb,val)
@@ -1210,7 +1210,7 @@ def read_parameter_file(inFileName):
         if not len(words): continue
 
         if not len(words) == 2: 
-            print "Cannot parse",line
+            print("Cannot parse",line)
             continue
 
         outputDict[words[0]] = float(words[1])
@@ -1273,7 +1273,7 @@ def SetYaxisRange(histList,yMax,yMin,logY,ratio, debug=False):
     if yMax != None and yMin != None:
         minimum = float(yMin)
         maximum = float(yMax)
-        if debug: print "Manually setting range:",minimum,maximum
+        if debug: print("Manually setting range:",minimum,maximum)
     elif yMax != None:
         maximum = float(yMax)
         minimum = max([hist.GetMinimum() for hist in histList])
